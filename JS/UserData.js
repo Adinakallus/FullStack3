@@ -16,6 +16,6 @@ function createUser(username, password, email, balance){
     // localStorage.setItem("userLoggedIn", JSON.stringify(userLoggedIn));
     // //window.location.replace("index.html");
     // return false;
-}
+//}
 
 }
