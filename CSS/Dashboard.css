@@ -1,0 +1,80 @@
+/* BackGround: #EDF2F4 
+   bigColor1: #40c9ff -blue
+   bigColor2: #e81cff-purple
+  
+
+*/
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+.top {
+    background-color: #EDF2F4;
+    height: 40vh;
+    display: flex;
+}
+
+.left {
+    flex: 1;
+}
+
+.right {
+    flex: 1;
+}
+
+.grad {
+    color:#EDF2F4;
+    border-radius: 10px;
+
+    background: hsla(197, 100%, 63%, 1);
+
+    background: linear-gradient(90deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+    
+    background: -moz-linear-gradient(90deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+    
+    background: -webkit-linear-gradient(90deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+    
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#40C9FF", endColorstr="#E81CFF", GradientType=1 );
+
+}
+.balanceBox {
+   }
+.bottom {
+    /* Styles for the bottom section */
+}
+
+.transactions {
+    list-style: none;
+    padding: 0;
+}
+
+.transactionItem {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Optional: Add border between transaction items */
+}
+
+.transactionInfo {
+    flex: 1;
+    display: flex;
+}
+
+.amount,
+.title,
+.date {
+    margin-right: 10px;
+}
+
+.arrow {
+    width: 20px;
+    height: 20px;
+    /* Styles for the arrows */
+}
+
+.addExpenseBtn {
+    /* Styles for the add expense button */
+}
