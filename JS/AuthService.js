@@ -1,8 +1,10 @@
 // authService.js
-
+const server=require("./Server")
 // Function to authenticate user login
 function loginUser(username, password) {
-    // Implement logic to authenticate user credentials
+    users=server.getAllUsers()
+    //find user form all users 
+    //check password 
     // This might involve checking against a database or local storage
     // Return true if authentication succeeds, false otherwise
 }

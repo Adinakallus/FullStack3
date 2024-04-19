@@ -13,7 +13,7 @@ body {
     /* background: linear-gradient(to bottom, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%); */
 
 }
-.container {
+.login-container, .register-container{
     max-width: 400px;
     margin: 50px auto;
     padding: 20px;
@@ -22,12 +22,32 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.upper {
+    height: 66.67%;
+    margin: 0% auto 10%; /* Center the gradient */
+    padding: 20px;
+    bottom: 100px;
+    color:#EDF2F4;
+    border-radius: 10px;
+
+    background: hsla(197, 100%, 63%, 1);
+
+    background: linear-gradient(90deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+    
+    background: -moz-linear-gradient(90deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+    
+    background: -webkit-linear-gradient(90deg, hsla(197, 100%, 63%, 1) 0%, hsla(294, 100%, 55%, 1) 100%);
+    
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#40C9FF", endColorstr="#E81CFF", GradientType=1 );
+
+}
 h2 {
     text-align: center;
 }
 
 .form-group {
     margin-bottom: 20px;
+    width: 100%;
 }
 
 label {
@@ -37,7 +57,7 @@ label {
 
 input[type="text"],
 input[type="password"] {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
