@@ -1,10 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Page Application</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#login">Login</a></li>
+            <li><a href="#register">Register</a></li>
+            <li><a href="#home">Home Page</a></li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <!-- Content will be dynamically loaded here -->
+    </div>
+
+    <script>
+        // Function to handle navigation
+        function navigate(route) {
+            const content = document.getElementById('content');
+            switch(route) {
+                case 'login':
+                    content.innerHTML = '<h1>Login Page</h1><form><input type="text" placeholder="Username"><br><input type="password" placeholder="Password"><br><button type="submit">Login</button></form>';
+                    break;
+                case 'register':
+                    content.innerHTML = '<h1>Register Page</h1><form><input type="text" placeholder="Username"><br><input type="password" placeholder="Password"><br><button type="submit">Register</button></form>';
+                    break;
+                case 'home':
+                    content.innerHTML = '<h1>Welcome to the Home Page!</h1>';
+                    break;
+                default:
+                    content.innerHTML = '<h1>Page Not Found</h1>';
+            }
+        }
+
+        // Function to handle initial page load
+        function initialLoad() {
+            const hash = window.location.hash.substr(1);
+            navigate(hash || 'login');
+        }
+
+        // Event listener for hash changes
+        window.addEventListener('hashchange', initialLoad);
+
+        // Initial load
+        initialLoad();
+    </script>
+</body>
+</html>
+
+
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>WalletWatch        </title>
-        <link rel="stylesheet" href="../CSS/Styles.css">
+        <link rel="stylesheet" href="../CSS/Dashboard.css">
     </head>
     <body>
         <div id="app">
@@ -15,4 +72,4 @@
         <button id="signup">Sign up</button>
         <script src="../JS/Main.js"></script>
     </body>
-    
+-->

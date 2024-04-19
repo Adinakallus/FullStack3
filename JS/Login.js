@@ -1,25 +1,35 @@
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault(); 
-    // Get form values
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
+document.addEventListener("DOMContentLoaded", function() {
+    var loginForm = document.getElementById("loginForm");
 
-     // Simulated AJAX request
-     var fxhr = new FXMLHttpRequest();//Creates a new FXMLHttpRequest object, 
-                                //which is used to make HTTP requests from the browser.
-     fxhr.open("GET", "api/login", true); 
-     fxhr.onload = function() {// checks the HTTP status code of the response
-        if (xhr.status == 200) {
-            // Successful login
-            var response = JSON.parse(xhr.responseText);//The response text is parsed as JSON, and the message is displayed to the user.
-            document.getElementById("loginMessage").innerText = response.message;
-            // Redirect to dashboard or next page
-            // window.location.href = "dashboard.html";
+    loginForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        // Retrieve user data from local storage
+        var userData = JSON.parse(localStorage.getItem(username));
+
+        if (userData && userData.password === password) {
+            // If username and password match, redirect to home.html
+            window.location.href = "../HTML/home.html";
         } else {
-            // Error handling
-            document.getElementById("loginMessage").innerText = "Login failed. Please try again.";
+            // If username or password is incorrect, display error message
+            var errorMessage = "Incorrect username or password.";
+            displayErrorMessage(errorMessage);
         }
-    };  
-    
-    fxhr.send();//Sends the request with the username and password data as JSON stringified payload.
+    });
+
+    function displayErrorMessage(message) {
+        // Use XMLHttpRequest to display an error message in a pop-up window
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "../HTML/error.html", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var errorWindow = window.open("", "Error", "width=400,height=200");
+                errorWindow.document.write(xhr.responseText.replace("{message}", message));
+            }
+        };
+        xhr.send();
+    }
 });

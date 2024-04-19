@@ -32,7 +32,6 @@ function deleteUser(username) {
     localStorage.setItem("users", JSON.stringify(filteredUsers));
 }
 
-
 function addExpense(username, expense) {
     const user = getUser(username);
     if (user) {
