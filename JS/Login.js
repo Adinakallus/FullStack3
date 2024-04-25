@@ -1,3 +1,4 @@
+// Wait for the DOM content to be fully loaded before executing the script
 document.addEventListener("DOMContentLoaded", function() {
     var loginForm = document.getElementById("loginForm");
 
@@ -7,29 +8,47 @@ document.addEventListener("DOMContentLoaded", function() {
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
 
-        // Retrieve user data from local storage
-        var userData = JSON.parse(localStorage.getItem(username));
+        // Create a JavaScript object with the login credentials
+        var loginData = {
+            username: username,
+            password: password
+        };
 
-        if (userData && userData.password === password) {
-            // If username and password match, redirect to home.html
-            window.location.href = "../HTML/home.html";
-        } else {
-            // If username or password is incorrect, display error message
-            var errorMessage = "Incorrect username or password.";
-            displayErrorMessage(errorMessage);
-        }
+        // Create an instance of FXMLHttpRequest
+        var xhr = new FXMLHttpRequest();
+
+        // Open a connection to the server to authenticate the user
+        xhr.open('GET', 'http://localhost:port/api/getUser?username=' + username, true);
+
+        // Set up an event handler for when the response is received from the server
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var user = JSON.parse(xhr.responseText);
+                if (user && user.password === password) {
+                    // If username and password match, redirect to home.html
+                    window.location.href = "../HTML/Dashboard.html";
+                } else {
+                    // If password is incorrect, display error message
+                    var errorMessage = "Incorrect password.";
+                    displayErrorMessage(errorMessage);
+                }
+            } else if (xhr.status === 404) {
+                // If user not found, display error message
+                var errorMessage = "User not found.";
+                displayErrorMessage(errorMessage);
+            } else {
+                // If an unexpected error occurs, display generic error message
+                var errorMessage = "An error occurred.";
+                displayErrorMessage(errorMessage);
+            }
+        };
+
+        // Send the request to the server to authenticate the user
+        xhr.send();
     });
 
     function displayErrorMessage(message) {
-        // Use XMLHttpRequest to display an error message in a pop-up window
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "../HTML/error.html", true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var errorWindow = window.open("", "Error", "width=400,height=200");
-                errorWindow.document.write(xhr.responseText.replace("{message}", message));
-            }
-        };
-        xhr.send();
+        // Display an error message to the user
+        alert(message);
     }
 });
