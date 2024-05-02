@@ -1,7 +1,4 @@
-
- 
-
- function addUser(user) {
+function addUser(user) {
     const allUsers = getAllUsers();
     allUsers.push(user);
     localStorage.setItem("users", JSON.stringify(allUsers));

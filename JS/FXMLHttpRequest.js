@@ -14,24 +14,31 @@ class FXMLHttpRequest {
         this.readyState = 1; // Opened
     }
 
-    send(data = null) {
+    send(data) {
         if (this.readyState !== 1) {
             throw new Error("Invalid state: The request has not been opened");
         }
+        // Assuming authService is initialized with the server instance
+        let authService = new AuthService(); // Pass the server instance here
 
-        // Simulate asynchronous behavior using setTimeout
-        setTimeout(() => {
-            // Simulate successful response
-            this.status = 200;
-            this.readyState = 4; // Done
-            this.responseText = "Simulated response from server";
+        // Call the function from AuthService to send the request asynchronously
+        authService.sendRequest(this.method, this.url, data)
+            .then(response => {
+                // Update the status, readyState, and responseText properties
+                this.status = response.status;
+                this.readyState = 4; // Done
+                this.responseText = response.body;
 
-            // Call onload event handler
-            if (typeof this.onload === "function") {
-                this.onload();
-            }
-        }, 1000); // Simulate 1 second delay
-
+                // Call onload event handler
+                if (typeof this.onload === "function") {
+                    this.onload();
+                }
+            })
+            .catch(error => {
+                // Handle errors
+                if (typeof this.onerror === "function") {
+                    this.onerror(error);
+                }
+            });
     }
 }
-

@@ -1,45 +1,57 @@
-// authService.js
-const server=require("./Server")
-// Function to authenticate user login
-function loginUser(username, password) {
-    users=server.getAllUsers()
-    //find user form all users 
-    //check password 
-    // This might involve checking against a database or local storage
-    // Return true if authentication succeeds, false otherwise
-}
+class AuthService {
+    constructor() {
+        // Initialize the server instance
+        this.server = new this.server();
+    }
 
-// Function to register a new user
-function registerUser(username, password) {
-    // Implement logic to register a new user
-    // This might involve storing user data in a database or local storage
-    // Return true if registration succeeds, false otherwise
-}
+    // Method to add a new user
+    addUser(newUser) {
+        console.log("Adding user:", newUser);
+        this.server.addUser(newUser); // Call addUser method from Server.js
+        // Your implementation logic goes here
+    }
 
-// Function to check if a user is currently logged in
-function isLoggedIn() {
-    // Implement logic to check if a user is logged in
-    // This might involve checking if there is a logged-in user stored in local storage
-    // Return true if a user is logged in, false otherwise
-}
+    // Method to get all users
+    getAllUsers() {
+        console.log("Getting all users");
+        const users = this.server.getAllUsers(); // Call getAllUsers method from Server.js
+        // Your implementation logic goes here
+        return users; // Example data
+    }
 
-// Function to get the currently logged-in user
-function getCurrentUser() {
-    // Implement logic to retrieve the currently logged-in user
-    // This might involve fetching user data from local storage
-    // Return the user object if logged in, null otherwise
-}
+    // Method to get a specific user by username
+    getUser(username) {
+        console.log("Getting user:", username);
+        const user = this.server.getUser(username); // Call getUser method from Server.js
+        // Your implementation logic goes here
+        return user; // Example data
+    }
 
-// Function to log out the current user
-function logoutUser() {
-    // Implement logic to log out the current user
-    // This might involve removing the logged-in user data from local storage
-}
+    // Method to update a user's information
+    updateUser(updatedUser) {
+        console.log("Updating user:", updatedUser);
+        this.server.updateUser(updatedUser); // Call updateUser method from Server.js
+        // Your implementation logic goes here
+    }
 
-module.exports = {
-    loginUser,
-    registerUser,
-    isLoggedIn,
-    getCurrentUser,
-    logoutUser
-};
+    // Method to delete a user by username
+    deleteUser(username) {
+        console.log("Deleting user:", username);
+        this.server.deleteUser(username); // Call deleteUser method from Server.js
+        // Your implementation logic goes here
+    }
+
+    // Method to add an expense for a user
+    addExpense(username, expense) {
+        console.log(`Adding expense for ${username}:`, expense);
+        this.server.addExpense(username, expense); // Call addExpense method from Server.js
+        // Your implementation logic goes here
+    }
+
+    // Method to delete an expense for a user
+    deleteExpense(username, expenseId) {
+        console.log(`Deleting expense ${expenseId} for ${username}`);
+        this.server.deleteExpense(username, expenseId); // Call deleteExpense method from Server.js
+        // Your implementation logic goes here
+    }
+}
