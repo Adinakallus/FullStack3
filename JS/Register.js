@@ -1,3 +1,5 @@
+import { FXMLHttpRequest } from './FXMLHttpRequest.js';
+
 // Wait for the DOM content to be fully loaded before executing the script
 document.addEventListener("DOMContentLoaded", function() {
     // Get the register form element by its ID
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var xhr = new FXMLHttpRequest();
 
         // Open a connection to the server to check if the username or email already exists
-        xhr.open('GET', '/api/getAllUsers', true);
+        xhr.open('GET', 'http://localhost:3000/api/getAllUsers', true);
 
         console.log(xhr);
             

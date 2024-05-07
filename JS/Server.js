@@ -1,8 +1,13 @@
-import express from "express";
-import { json } from "body-parser";
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 
-app.use(json());
+app.use(bodyParser.json());
+app.use(cors()); // Enable CORS for all routes
+
+
+//app.use(json());
 
 app.get("/", (req, res) => {
     res.send("Welcome to my Express server!");
@@ -21,6 +26,7 @@ app.get("/api/getAllUsers", (req, res)=>{
     const users = db.getAllUsers();
     res.status(200).json(users);
     console.log(users);
+    
 
 })
 
