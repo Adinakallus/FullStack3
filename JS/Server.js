@@ -1,8 +1,12 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+import express from "express";
+import { json } from "body-parser";
 const app = express();
 
-app.use(bodyParser.json());
+app.use(json());
+
+app.get("/", (req, res) => {
+    res.send("Welcome to my Express server!");
+});
 
 //ADD USER
 app.post("/api/addUser", (req, res)=>{
@@ -65,3 +69,7 @@ app.delete("/api/deleteExpense", (req,res)=>{
     db.deleteExpense(username, expenseId);
     res.status(200).json({message:'Expense deleted succesfully'})
 })
+
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+});
