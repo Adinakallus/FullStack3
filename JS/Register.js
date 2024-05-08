@@ -54,12 +54,22 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.error('Request failed:', xhr.status, xhr.statusText);
             }
         };
-        console.log(xhr);
-            
-        // Send the request to the server to fetch all users
-        xhr.send(jsonData);
+        xhr.onerror = function() {
+            console.error('Request failed:', xhr.status, xhr.statusText);
+            document.getElementById("registerMessage").innerHTML = "Failed to register user";
+        };
 
-        //window.location.href = "../HTML/Login.html";
+        console.log(xhr);
+        try {
+            // Try to register the user
+            xhr.send(jsonData);
+            window.location.href = "../HTML/Login.html";
+
+        } catch (error) {
+            // User already exists
+            document.getElementById("registerMessage").innerHTML = "User already exists";
+        }
+        
 
     });
     

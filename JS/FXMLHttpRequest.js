@@ -19,6 +19,13 @@ export class FXMLHttpRequest {
 
     send(data = ''){
         this.readyState = 2;
+        const handleError = (statusCode, errorMessage) => {
+            this.status = statusCode;
+            this.responseText = errorMessage;
+            if (typeof this.onerror === "function") {
+                this.onerror(errorMessage); // Pass the error message to the onerror handler
+            }
+        };
         switch (this.method){
             case 'GET':
                 this.readyState = 3;
@@ -40,65 +47,44 @@ export class FXMLHttpRequest {
                         this.responseText=Server.addUser(data)
                     }
                     if(this.url=="addExpense"){
-                        this.responseText=server.addExpense(data.username, data.expense)
+                        this.responseText=Server.addExpense(data.username, data.expense)
                     }
                     this.status =200;
                     this.onload();
                  }
                 else{
-                    this.status =400;
-                    this.onerror();
+                    handleError(400, "Bad Request: No data provided")
                 }
                 break;
-            //  case 'DELETE':
-            //     if(this.setRequestHeader){
-            //         this.readyState = 3;
-            //         this.responseText = DB.DELETE(this.setRequestHeader);
-            //         this.status =200;
-            //         this.onload();
-            //     }
-            //     else{
-            //         this.status =400;
-            //         this.onerror();
-            //     }
-            //     break;
-            // case 'DELETE_task':
-            //     if(this.setRequestHeader !== ''){
-            //         this.readyState = 3;
-            //         this.responseText = DB.DELETE_task(this.setRequestHeader);
-            //         this.status =200;
-            //         this.onload();
-            //     }
-            //     else{
-            //         this.status =400;
-            //         this.onerror();
-            //     }
-            //     break;
-            // case 'PUT_curr':
-            //     if(this.setRequestHeader){
-            //         console.log(this.setRequestHeader);
-            //         this.readyState = 3;
-            //         DB.PUT_curr(this.setRequestHeader);
-            //         this.status =200;
-            //         this.onload();
-            //     }
-            //     else{
-            //         this.status =400;
-            //         this.onerror();
-            //     }
-            //     break;
-            // case 'PUT':
-            //     if(this.setRequestHeader){
-                    //console.log(this.setRequestHeader);
-                 //   this.readyState = 3;
-                //     DB.PUT(this.setRequestHeader);
-                //     this.status =200;
-                //     this.onload();
-                // }
-                // else{
-                //     this.status =400;
-                //     this.onerror();
-                // }
+             case 'DELETE':
+                if(data){
+                    this.readyState = 3;
+                    if(this.url=="deleteUser"){
+                        console.log("data: ",data)
+                        this.responseText=Server.deleteUser(data)
+                    }
+                    if(this.url=="deleteExpense"){
+                        this.responseText=Server.deleteExpense(data.username, data.expense)
+                    }
+                    this.status =200;
+                    this.onload();
+                }
+                else{
+                    handleError(400, "Bad Request: No data provided")
+                }
+                break;
+            case 'PUT':
+                if(data){
+                   console.log("data: ", data);
+                   this.responseText=Server.updateUser(data)                
+                   this.readyState = 3;
+                   this.status =200;
+                   this.onload();
+                }
+                else{
+                    this.status =400;
+                    handleError(400, "Bad Request: No data provided")
+                }
                 break;
 
 

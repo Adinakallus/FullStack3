@@ -3,12 +3,14 @@ import * as DB from "./DataBase.js"
 
 
     // Function to add a user with validation
-     export function addUser(newUser) {
+     export function addUser(newUserString) {
+        const newUser=JSON.parse(newUserString)
+        console.log(newUser.username)
         const existingUser =DB.getUser(newUser.username);
         if (existingUser) {
             throw new Error('User already exists');
         } else {
-            this.db.addUser(newUser);
+            DB.addUser(newUser);
             return { message: 'User added successfully' };
         }
     }
@@ -21,10 +23,17 @@ import * as DB from "./DataBase.js"
     }
 
     // Function to get a user by username
-    export function getUser(username) {
+    export function getUser(username, password) {
         const user = DB.getUser(username);
         if (user) {
-            return user;
+            if(user.password==password)
+                 return user;
+            else
+            {
+                throw new Error('Incorrect password');
+
+            }
+        
         } else {
             throw new Error('User not found');
         }
@@ -36,7 +45,7 @@ import * as DB from "./DataBase.js"
         if (!existingUser) {
             throw new Error('User not found');
         } else {
-            this.db.updateUser(updatedUser);
+            DB.updateUser(updatedUser);
             return { message: 'User updated successfully' };
         }
     }
@@ -47,7 +56,7 @@ import * as DB from "./DataBase.js"
         if (!existingUser) {
             throw new Error('User not found');
         } else {
-            this.db.deleteUser(username);
+            DB.deleteUser(username);
             return { message: 'User deleted successfully' };
         }
     }
@@ -58,7 +67,7 @@ import * as DB from "./DataBase.js"
         if (!existingUser) {
             throw new Error('User not found');
         } else {
-            this.db.addExpense(username, expense);
+            DB.addExpense(username, expense);
             return { message: 'Expense added successfully' };
         }
     }
@@ -69,7 +78,7 @@ import * as DB from "./DataBase.js"
         if (!existingUser) {
             throw new Error('User not found');
         } else {
-            this.db.deleteExpense(username, expenseId);
+            DB.deleteExpense(username, expenseId);
             return { message: 'Expense deleted successfully' };
         }
     }

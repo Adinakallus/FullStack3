@@ -1,3 +1,4 @@
+//localStorage.clear();
 
 export function addUser(user) {
         const allUsers = this.getAllUsers();
