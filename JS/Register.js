@@ -29,16 +29,17 @@ document.addEventListener("DOMContentLoaded", function() {
             username: username,
             password: password,
             email: email,
-            balance: balance
+            balance: balance,
+            expenses:[]
         };
 
         var jsonData = JSON.stringify(user);
-
+        console.log(jsonData)
         // Create an instance of FXMLHttpRequest
         var xhr = new FXMLHttpRequest();
 
         // Open a connection to the server to check if the username or email already exists
-        xhr.open('POST', 'http://localhost:3000/api/addUser', true);
+        xhr.open('POST', 'addUser', true);
 
         // Set the Content-Type header
        // xhr.setRequestHeader('Content-Type', 'application/json');

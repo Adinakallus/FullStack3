@@ -1,5 +1,7 @@
+import * as Server from "./Server.js"
 
 export class FXMLHttpRequest {
+    
     constructor() {
         this.readyState = 0;
         this.status = 0;
@@ -15,71 +17,95 @@ export class FXMLHttpRequest {
         this.readyState = 1; // Opened
     }
 
-//     send(data) {
-//         if (this.readyState !== 1) {
-//             throw new Error("Invalid state: The request has not been opened");
-//         }
-//         // Assuming authService is initialized with the server instance
-//         let authService = new AuthService(); // Pass the server instance here
-
-//         // Call the function from AuthService to send the request asynchronously
-//         authService.sendRequest(this.method, this.url, data)
-//             .then(response => {
-//                 // Update the status, readyState, and responseText properties
-//                 this.status = response.status;
-//                 this.readyState = 4; // Done
-//                 this.responseText = response.body;
-
-//                 // Call onload event handler
-//                 if (typeof this.onload === "function") {
-//                     this.onload();
-//                 }
-//             })
-//             .catch(error => {
-//                 // Handle errors
-//                 if (typeof this.onerror === "function") {
-//                     this.onerror(error);
-//                 }
-//             });
-//     }
-
-send(data) {
-    if (this.readyState !== 1) {
-        throw new Error("Invalid state: The request has not been opened");
-    }
-
-    // Prepare fetch options
-    const options = {
-        method: this.method,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: data // Include the request body
-    };
-
-    // Make the fetch request
-    fetch(this.url, options)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Request failed:', response.status);
-            }
-            return response.text(); // Parse response text
-        })
-        .then(responseText => {
-            // Update properties and trigger onload
-            this.status = response.status;
-            this.responseText = responseText;
-            this.readyState = 4; // Done
-
-            if (typeof this.onload === "function") {
+    send(data = ''){
+        this.readyState = 2;
+        switch (this.method){
+            case 'GET':
+                this.readyState = 3;
+                if(this.url=="getAllUsers"){
+                    this.responseText=Server.getAllUsers()
+                }
+                if(this.url=="getUser"){
+                    this.responseText=Server.getUser(data)
+                }
+                            this.status =200;
                 this.onload();
-            }
-        })
-        .catch(error => {
-            // Handle errors
-            if (typeof this.onerror === "function") {
-                this.onerror(error);
-            }
-        });
-}
+                break;
+          
+            case 'POST':
+               if(data){
+                    this.readyState = 3;
+                    if(this.url=="addUser"){
+                        console.log("data: ",data)
+                        this.responseText=Server.addUser(data)
+                    }
+                    if(this.url=="addExpense"){
+                        this.responseText=server.addExpense(data.username, data.expense)
+                    }
+                    this.status =200;
+                    this.onload();
+                 }
+                else{
+                    this.status =400;
+                    this.onerror();
+                }
+                break;
+            //  case 'DELETE':
+            //     if(this.setRequestHeader){
+            //         this.readyState = 3;
+            //         this.responseText = DB.DELETE(this.setRequestHeader);
+            //         this.status =200;
+            //         this.onload();
+            //     }
+            //     else{
+            //         this.status =400;
+            //         this.onerror();
+            //     }
+            //     break;
+            // case 'DELETE_task':
+            //     if(this.setRequestHeader !== ''){
+            //         this.readyState = 3;
+            //         this.responseText = DB.DELETE_task(this.setRequestHeader);
+            //         this.status =200;
+            //         this.onload();
+            //     }
+            //     else{
+            //         this.status =400;
+            //         this.onerror();
+            //     }
+            //     break;
+            // case 'PUT_curr':
+            //     if(this.setRequestHeader){
+            //         console.log(this.setRequestHeader);
+            //         this.readyState = 3;
+            //         DB.PUT_curr(this.setRequestHeader);
+            //         this.status =200;
+            //         this.onload();
+            //     }
+            //     else{
+            //         this.status =400;
+            //         this.onerror();
+            //     }
+            //     break;
+            // case 'PUT':
+            //     if(this.setRequestHeader){
+                    //console.log(this.setRequestHeader);
+                 //   this.readyState = 3;
+                //     DB.PUT(this.setRequestHeader);
+                //     this.status =200;
+                //     this.onload();
+                // }
+                // else{
+                //     this.status =400;
+                //     this.onerror();
+                // }
+                break;
+
+
+
+
+        }
+
+
+    }
 }

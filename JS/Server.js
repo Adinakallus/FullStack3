@@ -1,85 +1,75 @@
-
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const DataBase=require('./DataBase.js')
-
-const app = express();
-
-app.use(bodyParser.json());
-app.use(cors()); // Enable CORS for all routes
-
-const db= new DataBase()
-//app.use(json());
-
-app.get("/", (req, res) => {
-    res.send("Welcome to my Express server!");
-});
-
-//ADD USER
-app.post("/api/addUser", (req, res)=>{
-    console.log("here");
-    const newUser = req.body;
-    db.addUser(newUser);
-    res.status(201).json({ message: 'User added successfully' });
-
-});
-
-//GET ALL USERS
-app.get("/api/getAllUsers", (req, res)=>{
-    const users = db.getAllUsers();
-    res.status(200).json(users);
-    console.log(users);
+import * as DB from "./DataBase.js"
+    
 
 
-})
-
-//GET USER
-app.get("/api/getUser", (req, res)=>{
-    const username = req.params.username;
-    console.log(username);
-    const user = db.getUser(username);
-    res.status(200).json(user);
-    if(user){
-        res.status(200).json(user);
-    } else{
-    res.status(404).json({message: 'User not found'});
+    // Function to add a user with validation
+     export function addUser(newUser) {
+        const existingUser =DB.getUser(newUser.username);
+        if (existingUser) {
+            throw new Error('User already exists');
+        } else {
+            this.db.addUser(newUser);
+            return { message: 'User added successfully' };
+        }
     }
 
-})
+    // Function to get all users
+    export function getAllUsers() {
+        const users = DB.getAllUsers();
+        console.log(users);
+        return users;
+    }
 
-//UPDATE USER
-app.put("/api/updateUser", (req,res)=>{
-    const updatedUser=req.body;
-    db.updateUser(updatedUser);
-    res.status(200).json({message:'User updated succesfully'})
-})
+    // Function to get a user by username
+    export function getUser(username) {
+        const user = DB.getUser(username);
+        if (user) {
+            return user;
+        } else {
+            throw new Error('User not found');
+        }
+    }
 
+    // Function to update a user
+    export function updateUser(updatedUser) {
+        const existingUser = DB.getUser(updatedUser.username);
+        if (!existingUser) {
+            throw new Error('User not found');
+        } else {
+            this.db.updateUser(updatedUser);
+            return { message: 'User updated successfully' };
+        }
+    }
 
-//DELETE USER
-app.delete("/api/deleteUser", (req,res)=>{
-    const username=req.params.username;
-    db.deleteUser(username);
-    res.status(200).json({message:'User deleted succesfully'})
-})
+    // Function to delete a user
+    export function deleteUser(username) {
+        const existingUser = DB.getUser(username);
+        if (!existingUser) {
+            throw new Error('User not found');
+        } else {
+            this.db.deleteUser(username);
+            return { message: 'User deleted successfully' };
+        }
+    }
 
+    // Function to add an expense
+    export function addExpense(username, expense) {
+        const existingUser = DB.getUser(username);
+        if (!existingUser) {
+            throw new Error('User not found');
+        } else {
+            this.db.addExpense(username, expense);
+            return { message: 'Expense added successfully' };
+        }
+    }
 
-//ADD EXPENSE
-app.post("/api/addExpense", (req,res)=>{
-    const { username, expense } = req.body;
-    db.addExpense(username, expense);
-    res.status(200).json({message:'Expense added succesfully'})
-})
-
-
-//DELETE EXPENSE
-
-app.delete("/api/deleteExpense", (req,res)=>{
-    const {username, expenseId}=req.params;
-    db.deleteExpense(username, expenseId);
-    res.status(200).json({message:'Expense deleted succesfully'})
-})
-
-app.listen(3000, () => {
-    console.log("Server is running on port 3000");
-});
+    // Function to delete an expense
+    export function deleteExpense(username, expenseId) {
+        const existingUser = DB.getUser(username);
+        if (!existingUser) {
+            throw new Error('User not found');
+        } else {
+            this.db.deleteExpense(username, expenseId);
+            return { message: 'Expense deleted successfully' };
+        }
+    }
