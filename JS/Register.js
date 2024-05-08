@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function() {
         };
 
         var jsonData = JSON.stringify(user);
-        console.log(jsonData)
         // Create an instance of FXMLHttpRequest
         var xhr = new FXMLHttpRequest();
 

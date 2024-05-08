@@ -23,7 +23,10 @@ import * as DB from "./DataBase.js"
     }
 
     // Function to get a user by username
-    export function getUser(username, password) {
+    export function getUser(userDataString) {
+        const userData=JSON.parse(userDataString)
+        const username=userData.username;
+        const password=userData.password;
         const user = DB.getUser(username);
         if (user) {
             if(user.password==password)

@@ -13,7 +13,7 @@ export function addUser(user) {
 
     export function getUser(username) {
         const allUsers = this.getAllUsers();
-        return allUsers.find(user => user.username === username);
+        return allUsers.find(user => username == user.username);
     }
 
     export function updateUser(updatedUser) {

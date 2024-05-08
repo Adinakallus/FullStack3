@@ -1,3 +1,6 @@
+
+import { FXMLHttpRequest } from './FXMLHttpRequest.js';
+
 // Wait for the DOM content to be fully loaded before executing the script
 document.addEventListener("DOMContentLoaded", function() {
     var loginForm = document.getElementById("loginForm");
@@ -13,16 +16,17 @@ document.addEventListener("DOMContentLoaded", function() {
             username: username,
             password: password
         };
+        var jsonData = JSON.stringify(loginData);
 
         // Create an instance of FXMLHttpRequest
         var xhr = new FXMLHttpRequest();
 
         // Open a connection to the server to authenticate the user
-        xhr.open('GET', 'http://localhost:port/api/getUser?username=' + username, true);
+        xhr.open('GET', "getUser", true);
 
         // Set up an event handler for when the response is received from the server
         xhr.onload = function() {
-            if (xhr.status === 200) {
+            if (xhr.status >= 200 && xhr.status < 300) {
                 var user = JSON.parse(xhr.responseText);
                 if (user && user.password === password) {
                     // If username and password match, redirect to home.html
@@ -44,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
         };
 
         // Send the request to the server to authenticate the user
-        xhr.send();
+        xhr.send(jsonData);
     });
 
     function displayErrorMessage(message) {
