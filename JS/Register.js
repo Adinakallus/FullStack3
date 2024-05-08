@@ -32,16 +32,31 @@ document.addEventListener("DOMContentLoaded", function() {
             balance: balance
         };
 
+        var jsonData = JSON.stringify(user);
+
         // Create an instance of FXMLHttpRequest
         var xhr = new FXMLHttpRequest();
 
         // Open a connection to the server to check if the username or email already exists
-        xhr.open('GET', 'http://localhost:3000/api/getAllUsers', true);
+        xhr.open('POST', 'http://localhost:3000/api/addUser', true);
 
+        // Set the Content-Type header
+       // xhr.setRequestHeader('Content-Type', 'application/json');
+
+        // Listen for the response from the server
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Request was successful, handle the response here
+                console.log(xhr.responseText);
+            } else {
+                // Request failed
+                console.error('Request failed:', xhr.status, xhr.statusText);
+            }
+        };
         console.log(xhr);
             
         // Send the request to the server to fetch all users
-        xhr.send();
+        xhr.send(jsonData);
 
         //window.location.href = "../HTML/Login.html";
 

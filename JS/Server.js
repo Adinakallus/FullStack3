@@ -1,12 +1,15 @@
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const DataBase=require('./DataBase.js')
+
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors()); // Enable CORS for all routes
 
-
+const db= new DataBase()
 //app.use(json());
 
 app.get("/", (req, res) => {
@@ -15,18 +18,19 @@ app.get("/", (req, res) => {
 
 //ADD USER
 app.post("/api/addUser", (req, res)=>{
+    console.log("here");
     const newUser = req.body;
     db.addUser(newUser);
     res.status(201).json({ message: 'User added successfully' });
 
-})
+});
 
 //GET ALL USERS
 app.get("/api/getAllUsers", (req, res)=>{
     const users = db.getAllUsers();
     res.status(200).json(users);
     console.log(users);
-    
+
 
 })
 
