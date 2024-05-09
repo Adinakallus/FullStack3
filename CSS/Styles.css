@@ -22,7 +22,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.upper {
+.login-upper, .register-upper{
     height: 66.67%;
     margin: 0% auto 10%; /* Center the gradient */
     padding: 20px;
