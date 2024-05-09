@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     window.location.href = "../HTML/Dashboard.html";
                 } else {
                     // If password is incorrect, display error message
-                    var errorMessage = "Incorrect password.";
+                    document.getElementById("loginMessage").innerHTML ="Incorrect password.";
                    // displayErrorMessage(errorMessage);
                 }
             } else {
