@@ -42,12 +42,12 @@ document.addEventListener("DOMContentLoaded", function() {
                // console.error('Request failed:', xhr.status, xhr.statusText);
 
                 // If user not found, display error message
-                document.getElementById("LoginMessage").innerHTML = xhr.responseText;
+                document.getElementById("loginMessage").innerHTML = xhr.responseText;
 
             }
         };
-        xhr.onerror = function() {
-            console.error('Request failed:', xhr.status, xhr.statusText);
+        xhr.onerror = function(message) {
+            document.getElementById("loginMessage").innerHTML = message;
         };
 
         try{
