@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.log(xhr.responseText);
             } else {
                 // Request failed
-                console.error('Request failed:', xhr.status, xhr.statusText);
             }
         };
         xhr.onerror = function() {

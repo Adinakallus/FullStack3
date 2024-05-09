@@ -26,33 +26,40 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Set up an event handler for when the response is received from the server
         xhr.onload = function() {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                var user = JSON.parse(xhr.responseText);
+            if (xhr.status ==200) {
+                console.log("responseText: ",xhr.responseText);
+                var user = xhr.responseText;
+                console.log("user: ", user)
                 if (user && user.password === password) {
                     // If username and password match, redirect to home.html
                     window.location.href = "../HTML/Dashboard.html";
                 } else {
                     // If password is incorrect, display error message
                     var errorMessage = "Incorrect password.";
-                    displayErrorMessage(errorMessage);
+                   // displayErrorMessage(errorMessage);
                 }
-            } else if (xhr.status === 404) {
-                // If user not found, display error message
-                var errorMessage = "User not found.";
-                displayErrorMessage(errorMessage);
             } else {
-                // If an unexpected error occurs, display generic error message
-                var errorMessage = "An error occurred.";
-                displayErrorMessage(errorMessage);
+               // console.error('Request failed:', xhr.status, xhr.statusText);
+
+                // If user not found, display error message
+                document.getElementById("LoginMessage").innerHTML = xhr.responseText;
+
             }
         };
+        xhr.onerror = function() {
+            console.error('Request failed:', xhr.status, xhr.statusText);
+        };
 
+        try{
         // Send the request to the server to authenticate the user
         xhr.send(jsonData);
+      //  window.location.href = "../HTML/Dashboard.html";
+
+        }catch(error){
+            document.getElementById("LoginMessage").innerHTML = "User already exists";
+
+        }
     });
 
-    function displayErrorMessage(message) {
-        // Display an error message to the user
-        alert(message);
-    }
+ 
 });

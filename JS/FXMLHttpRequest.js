@@ -29,6 +29,7 @@ export class FXMLHttpRequest {
         switch (this.method){
             case 'GET':
                 this.readyState = 3;
+                try{
                 if(this.url=="getAllUsers"){
                     this.responseText=Server.getAllUsers()
                 }
@@ -37,6 +38,12 @@ export class FXMLHttpRequest {
                 }
                             this.status =200;
                 this.onload();
+                }
+                catch(error){
+                    handleError(404, "User dosnt exist");
+                    
+                }
+            
                 break;
           
             case 'POST':

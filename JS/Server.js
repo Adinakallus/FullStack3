@@ -29,13 +29,13 @@ import * as DB from "./DataBase.js"
         const password=userData.password;
         const user = DB.getUser(username);
         if (user) {
-            if(user.password==password)
-                 return user;
-            else
-            {
-                throw new Error('Incorrect password');
+            // if(user.password==password)
+              return user;
+            // else
+            // {
+            //     throw new Error('Incorrect password');
 
-            }
+            // }
         
         } else {
             throw new Error('User not found');
