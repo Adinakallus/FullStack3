@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
       //  window.location.href = "../HTML/Dashboard.html";
 
         }catch(error){
-            document.getElementById("LoginMessage").innerHTML = "User already exists";
+            document.getElementById("LoginMessage").innerHTML = "User already exists ";
 
         }
     });
