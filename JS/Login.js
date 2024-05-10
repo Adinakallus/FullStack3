@@ -31,7 +31,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 var user = xhr.responseText;
                 console.log("user: ", user)
                 if (user && user.password === password) {
-                    // If username and password match, redirect to home.html
+                     // Store user information in sessionStorage
+                     sessionStorage.setItem('currentUser', JSON.stringify(user));
+                     // Redirect to the Dashboard page
                     window.location.href = "../HTML/Dashboard.html";
                 } else {
                     // If password is incorrect, display error message
