@@ -82,3 +82,26 @@ button:hover {
     color: red;
     margin-top: 10px;
 }
+
+.addExpenseForm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Optional: Adjust margin as needed */
+}
+
+.input-group {
+    display: flex;
+    flex-grow: 1; /* Allow input fields to grow to fill remaining space */
+    margin-right: 10px; /* Optional: Adjust spacing between input fields */
+}
+
+.input-group input,
+.input-group select {
+    flex-grow: 1; /* Allow input fields and select to grow to fill remaining space */
+    margin-right: 10px; /* Optional: Adjust spacing between input fields */
+}
+
+#addExpenseBtn {
+    /* Optional: Adjust button styles */
+}

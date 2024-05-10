@@ -26,6 +26,16 @@
                 </div>
             </div>     
            </div>
+           <form id="addExpenseForm" class="addExpenseForm">
+            <input type="number" id="expenseAmount" placeholder="Amount" required>
+            <input type="text" id="expenseTitle" placeholder="Title" required>
+            <input type="date" id="expenseDate" required>
+            <select id="expenseType">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+            </select>
+            <button type="submit" id="addExpenseBtn">Add</button>
+        </form>
         <div class="bottom">
             <ul class="transactions">
                 <li>
