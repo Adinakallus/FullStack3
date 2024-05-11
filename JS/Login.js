@@ -1,67 +1,72 @@
-
 import { FXMLHttpRequest } from './FXMLHttpRequest.js';
 
-// Wait for the DOM content to be fully loaded before executing the script
-document.addEventListener("DOMContentLoaded", function() {
-    var loginForm = document.getElementById("loginForm");
+// Define the navigateToLogin function
+function navigateToLogin() {
+    // Wait for the DOM content to be fully loaded before executing the script
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the login form element by its ID
+        var loginForm = document.getElementById("loginForm");
 
-    loginForm.addEventListener("submit", function(event) {
-        event.preventDefault();
+        // Listen for the form submission event
+        loginForm.addEventListener("submit", function(event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
 
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
+            // Retrieve the values entered by the user in the form fields
+            var username = document.getElementById("login-username").value;
+            var password = document.getElementById("login-password").value;
 
-        // Create a JavaScript object with the login credentials
-        var loginData = {
-            username: username,
-            password: password
-        };
-        var jsonData = JSON.stringify(loginData);
+            // Create a JavaScript object with the login credentials
+            var loginData = {
+                username: username,
+                password: password
+            };
+            var jsonData = JSON.stringify(loginData);
 
-        // Create an instance of FXMLHttpRequest
-        var xhr = new FXMLHttpRequest();
+            // Create an instance of FXMLHttpRequest
+            var xhr = new FXMLHttpRequest();
 
-        // Open a connection to the server to authenticate the user
-        xhr.open('GET', "getUser", true);
+            // Open a connection to the server to authenticate the user
+            xhr.open('POST', 'authenticateUser', true);
 
-        // Set up an event handler for when the response is received from the server
-        xhr.onload = function() {
-            if (xhr.status ==200) {
-                console.log("responseText: ",xhr.responseText);
-                var user = xhr.responseText;
-                console.log("user: ", user)
-                if (user && user.password === password) {
-                     // Store user information in sessionStorage
-                     sessionStorage.setItem('currentUser', JSON.stringify(user));
-                     // Redirect to the Dashboard page
-                    window.location.href = "../HTML/Dashboard.html";
+            // Set the Content-Type header
+            // xhr.setRequestHeader('Content-Type', 'application/json');
+
+            // Listen for the response from the server
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var user = JSON.parse(xhr.responseText);
+                    // Check if user is authenticated
+                    if (user && user.password === password) {
+                        // Store user information in sessionStorage
+                        sessionStorage.setItem('currentUser', JSON.stringify(user));
+                        // Redirect to the Dashboard page
+                        window.location.href = "../HTML/Dashboard.html";
+                    } else {
+                        // If password is incorrect, display error message
+                        document.getElementById("loginMessage").innerHTML ="Incorrect username or password.";
+                    }
                 } else {
-                    // If password is incorrect, display error message
-                    document.getElementById("loginMessage").innerHTML ="Incorrect password.";
-                   // displayErrorMessage(errorMessage);
+                    // If user not found or request failed, display error message
+                    document.getElementById("loginMessage").innerHTML = "Failed to authenticate user.";
                 }
-            } else {
-               // console.error('Request failed:', xhr.status, xhr.statusText);
+            };
 
-                // If user not found, display error message
-                document.getElementById("loginMessage").innerHTML = xhr.responseText;
+            // Listen for error event from the server
+            xhr.onerror = function() {
+                document.getElementById("loginMessage").innerHTML = "Failed to authenticate user.";
+            };
 
+            try {
+                // Send the request to the server to authenticate the user
+                xhr.send(jsonData);
+            } catch(error) {
+                // If there is an error during sending request, display error message
+                document.getElementById("loginMessage").innerHTML = "Failed to authenticate user.";
             }
-        };
-        xhr.onerror = function(message) {
-            document.getElementById("loginMessage").innerHTML = message;
-        };
-
-        try{
-        // Send the request to the server to authenticate the user
-        xhr.send(jsonData);
-      //  window.location.href = "../HTML/Dashboard.html";
-
-        }catch(error){
-            document.getElementById("LoginMessage").innerHTML = "User already exists ";
-
-        }
+        });
     });
+}
 
- 
-});
+// Call the navigateToLogin function to execute login functionality
+navigateToLogin();
