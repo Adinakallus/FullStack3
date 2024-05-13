@@ -35,7 +35,8 @@ export function addUser(user) {
         const user = this.getUser(username);
         if (user) {
             user.expenses.push(expense);
-            user.balance += expense; // Update balance
+            console.log(expense.amount)
+            user.balance =user.balance+ expense.amount; // Update balance
             this.updateUser(user);
         }
     }

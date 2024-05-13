@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var password = document.getElementById("password").value;
         var confirmPassword = document.getElementById("confirmPassword").value;
         var email = document.getElementById("email").value;
-        var balance = document.getElementById("balance").value;
+        var balanceString = document.getElementById("balance").value;
 
         // Check if the entered passwords match
         if (password !== confirmPassword) {
@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // Create a JavaScript object to store the user data
+        var balance = parseInt(balanceString, 10); // Assuming balanceString is the string representation of balance
+
         var user = {
             username: username,
             password: password,

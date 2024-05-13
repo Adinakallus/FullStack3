@@ -41,7 +41,7 @@ export class FXMLHttpRequest {
                 }
                 catch(error){
                     handleError(404, "User dosnt exist");
-                    
+
                 }
             
                 break;

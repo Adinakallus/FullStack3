@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (addExpenseForm) {
         addExpenseForm.addEventListener('submit', function(event) {
             event.preventDefault();
-            var amount = parseFloat(document.getElementById('expenseAmount').value);
+            var amountString = parseFloat(document.getElementById('expenseAmount').value);
             var title = document.getElementById('expenseTitle').value;
             var date = document.getElementById('expenseDate').value;
             var type = document.getElementById('expenseType').value;
@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }else{
             // Construct the expense object
-            var currentUser = sessionStorage.getItem('currentUser');
-
+            var currentUser =JSON.parse( sessionStorage.getItem('currentUser'));
+            var amount = parseInt(amountString, 10)
             var expense = {
                 amount: amount,
                 title: title,
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 type: type
             };
             const data={
-                username:currentUser,
+                username:currentUser.username,
                 expense:expense
             }
             var jsonData = JSON.stringify(data);
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
             xhr.onload = function() {
                 if (xhr.status ==200) {
                     console.log("responseText: ",xhr.responseText);
-                    var user = xhr.responseText;
+                   // var user = xhr.responseText;
                     console.log("user: ", user)
                    sessionStorage.setItem('currentUser', JSON.stringify(user));
                    // Redirect to the Dashboard page
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
        
             try{
             // Send the request to the server to authenticate the user
-            xhr.send(jsonData);
+            xhr.send(data);
           //  window.location.href = "../HTML/Dashboard.html";
        
             }catch(error){
