@@ -1,9 +1,23 @@
-
 import { FXMLHttpRequest } from './FXMLHttpRequest.js';
 
 // Wait for the DOM content to be fully loaded before executing the script
 document.addEventListener("DOMContentLoaded", function() {
+    // Function to show the register page
+    function showRegisterPage() {
+        document.getElementById("registerSection").style.display = "block";
+        document.getElementById("dashboardSection").style.display = "none";
+        document.getElementById("loginSection").style.display = "none";
+    }
+
+
+    // Add event listener to the register link
+    var registerLink = document.getElementById("registerLink");
+    if (registerLink) {
+        registerLink.addEventListener("click", showRegisterPage);
+    }
+    
     var loginForm = document.getElementById("loginForm");
+
 
     loginForm.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -55,13 +69,10 @@ document.addEventListener("DOMContentLoaded", function() {
         try{
         // Send the request to the server to authenticate the user
         xhr.send(jsonData);
-      //  window.location.href = "../HTML/Dashboard.html";
+        //window.location.href = "../HTML/Dashboard.html";
 
         }catch(error){
             document.getElementById("LoginMessage").innerHTML = "User already exists ";
-
         }
     });
-
- 
 });

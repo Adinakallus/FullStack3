@@ -1,7 +1,4 @@
 import * as DB from "./DataBase.js"
-    
-
-
     // Function to add a user with validation
      export function addUser(newUserString) {
         const newUser=JSON.parse(newUserString)

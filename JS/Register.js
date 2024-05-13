@@ -69,8 +69,5 @@ document.addEventListener("DOMContentLoaded", function() {
             // User already exists
             document.getElementById("registerMessage").innerHTML = "User already exists";
         }
-        
-
-    });
-    
+    }); 
 });

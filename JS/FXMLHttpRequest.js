@@ -93,12 +93,6 @@ export class FXMLHttpRequest {
                     handleError(400, "Bad Request: No data provided")
                 }
                 break;
-
-
-
-
         }
-
-
     }
 }
