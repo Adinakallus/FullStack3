@@ -1,5 +1,3 @@
-import { FXMLHttpRequest } from './FXMLHttpRequest.js';
-
 document.addEventListener("DOMContentLoaded", function() {
     // Retrieve user information from sessionStorage
     var currentUser = sessionStorage.getItem('currentUser');
@@ -89,5 +87,5 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         })
     };
-    });
+});
   

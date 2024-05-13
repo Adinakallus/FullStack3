@@ -3,9 +3,20 @@
    bigColor1: #40c9ff -blue
    bigColor2: #e81cff-purple
    hover:#6FB6FF darker blue
-  
-
 */
+
+#loginSection {
+    display:block;
+}
+
+#registerSection {
+    display: none;
+}
+
+#dashboardSection {
+    display: none;
+}
+
 
 body {
     font-family: "Nunito Sans", sans-serif;
