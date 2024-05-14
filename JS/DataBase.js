@@ -12,7 +12,7 @@ export function getAllUsers() {
 }
 
 export function getUser(username) {
-    const allUsers = this.getAllUsers();
+    const allUsers = getAllUsers();
     return allUsers.find(user => username == user.username);
 }
 
@@ -46,6 +46,16 @@ export function deleteExpense(username, expenseId) {
     if (user) {
         user.expenses = user.expenses.filter(expense => expense.id !== expenseId);
         this.updateUser(user);
+    }
+}
+
+// Function to get expenses by username
+export function getExpenses(username) {
+    const user = getUser(username);
+    if (user) {
+        return user.expenses;
+    } else {
+        throw new Error('User not found');
     }
 }
 

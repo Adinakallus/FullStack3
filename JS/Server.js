@@ -82,3 +82,10 @@ import * as DB from "./DataBase.js"
             return { message: 'Expense deleted successfully' };
         }
     }
+
+
+    // Function to get expenses by username
+    export function getExpenses(username) {
+        const userExpenses = DB.getExpenses(username);
+        return userExpenses;
+    }

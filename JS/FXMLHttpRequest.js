@@ -36,6 +36,9 @@ export class FXMLHttpRequest {
                 if(this.url=="getUser"){
                     this.responseText=Server.getUser(data)
                 }
+                if (this.url === "getExpenses") {
+                    this.responseText = Server.getExpenses(data);
+                }
                             this.status =200;
                 this.onload();
                 }
