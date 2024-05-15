@@ -86,6 +86,24 @@ export function deleteExpense(username, expense) {
         throw new Error('User not found');
     }
 }
+// Function to update an expense
+export function updateExpense(username, updatedExpense) {
+    const user = getUser(username);
+    if (user) {
+        const index = user.expenses.findIndex(expense => expense.id === updatedExpense.id);
+        if (index !== -1) {
+            // Update the expense in the array
+            user.expenses[index] = updatedExpense;
+            updateUser(user); // Update the user in the database
+            return user; // Return the updated user object
+        } else {
+            throw new Error('Expense not found');
+        }
+    } else {
+        throw new Error('User not found');
+    }
+}
+
 
 
 

@@ -83,6 +83,15 @@ import * as DB from "./DataBase.js"
         }
     }
 
+        // Function to update an expense
+    export function updateExpense(username, expense) {
+        try {
+            return DB.updateExpense(username, expense);
+        } catch (error) {
+            throw new Error('Failed to update expense: ' + error.message);
+        }
+    }
+
 
     // Function to get expenses by username
     export function getExpenses(username) {
