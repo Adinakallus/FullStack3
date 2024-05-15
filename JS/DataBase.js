@@ -23,6 +23,7 @@ export function updateUser(updatedUser) {
         allUsers[index] = updatedUser;
         localStorage.setItem("users", JSON.stringify(allUsers));
     }
+    return  allUsers[index];
 }
 
 export function deleteUser(username) {
@@ -34,10 +35,20 @@ export function deleteUser(username) {
 export function addExpense(username, expense) {
     const user = this.getUser(username);
     if (user) {
+        console.log("Expense type:", expense.type);
+        console.log("Expense amount:", expense.amount);
+        // user.expenses=[],
+        // user.balance=0;
         user.expenses.push(expense);
         console.log(expense.amount)
-        user.balance =user.balance+ expense.amount; // Update balance
-        this.updateUser(user);
+        if(expense.type=='income'){
+         user.balance =user.balance+ expense.amount; // Update balance
+        }
+        if(expense.type=='expense'){
+            user.balance =user.balance- expense.amount; // Update balance
+           }
+       var updatedUser= this.updateUser(user);
+        return updatedUser;
     }
 }
 
@@ -45,8 +56,8 @@ export function deleteExpense(username, expenseId) {
     const user = this.getUser(username);
     if (user) {
         user.expenses = user.expenses.filter(expense => expense.id !== expenseId);
-        this.updateUser(user);
-    }
+        var updatedUser= this.updateUser(user);
+        return updatedUser;    }
 }
 
 // Function to get expenses by username

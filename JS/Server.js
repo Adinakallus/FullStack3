@@ -45,8 +45,8 @@ import * as DB from "./DataBase.js"
         if (!existingUser) {
             throw new Error('User not found');
         } else {
-            DB.updateUser(updatedUser);
-            return { message: 'User updated successfully' };
+            
+            return DB.updateUser(updatedUser);
         }
     }
 
@@ -56,8 +56,8 @@ import * as DB from "./DataBase.js"
         if (!existingUser) {
             throw new Error('User not found');
         } else {
-            DB.deleteUser(username);
-            return { message: 'User deleted successfully' };
+           
+            return  {message: "User deleted successfuly"};
         }
     }
 
@@ -67,8 +67,8 @@ import * as DB from "./DataBase.js"
         if (!existingUser) {
             throw new Error('User not found');
         } else {
-            DB.addExpense(username, expense);
-            return { message: 'Expense added successfully' };
+           
+            return  DB.addExpense(username, expense);
         }
     }
 
@@ -78,8 +78,8 @@ import * as DB from "./DataBase.js"
         if (!existingUser) {
             throw new Error('User not found');
         } else {
-            DB.deleteExpense(username, expenseId);
-            return { message: 'Expense deleted successfully' };
+            
+            return DB.deleteExpense(username, expenseId);
         }
     }
 
