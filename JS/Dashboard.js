@@ -176,12 +176,20 @@ document.addEventListener("DOMContentLoaded", function() {
             
                     var updateButton = document.createElement('button');
                     updateButton.textContent = 'Update';
-                    // Add event listener for update button
-            
+                    updateButton.addEventListener('click', function() {
+                        // Handle update expense functionality here
+                        // You can show a form/modal to update the expense details
+                    });
+                        
                     var deleteButton = document.createElement('button');
                     deleteButton.textContent = 'Delete';
-                    // Add event listener for delete button
-            
+                    deleteButton.addEventListener('click', function() {
+                        var currentUser = sessionStorage.getItem('currentUser');
+                        if (currentUser) {
+                        currentUser = JSON.parse(currentUser);                       // var expenseId = expense.id; // Assuming each expense has a unique id
+                        deleteExpense(currentUser.username, expense);
+                        }
+                    });            
                     transactionItem.appendChild(updateButton);
                     transactionItem.appendChild(deleteButton);
             
@@ -189,6 +197,29 @@ document.addEventListener("DOMContentLoaded", function() {
                     transactionsList.appendChild(listItem);
                 });
             }
+
+            function deleteExpense(username, expense) {
+                var xhr = new FXMLHttpRequest();
+                xhr.open('DELETE', 'deleteExpense', true);
+                xhr.onload = function() {
+                    if (xhr.status == 200) {
+                        // Upon successful deletion, fetch and display expenses again
+                        var user = xhr.responseText;
+                        sessionStorage.setItem('currentUser', JSON.stringify(user));
+                        displayWelcome();
+                        fetchAndDisplayExpenses();
+                        console.log("responseText: ",xhr.responseText);
+                        console.log("user: ", user)                        
+                    } else {
+                        console.error('Failed to delete expense:', xhr.status, xhr.statusText);
+                    }
+                };
+                xhr.onerror = function() {
+                    console.error('Request failed:', xhr.status, xhr.statusText);
+                };
+                xhr.send(JSON.stringify({ username: username, expense: expense }));
+            }
+
 });
 
 

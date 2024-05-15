@@ -73,13 +73,13 @@ import * as DB from "./DataBase.js"
     }
 
     // Function to delete an expense
-    export function deleteExpense(username, expenseId) {
+    export function deleteExpense(username, expense) {
         const existingUser = DB.getUser(username);
         if (!existingUser) {
             throw new Error('User not found');
         } else {
             
-            return DB.deleteExpense(username, expenseId);
+            return DB.deleteExpense(username, expense);
         }
     }
 

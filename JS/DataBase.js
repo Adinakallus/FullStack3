@@ -52,13 +52,42 @@ export function addExpense(username, expense) {
     }
 }
 
-export function deleteExpense(username, expenseId) {
+// export function deleteExpense(username, expense) {
+//     const user = this.getUser(username);
+//     if (user) {
+//         user.expenses = user.expenses.filter(expense => expense.id !== expense.expenseId);
+//         if(expense.type=='income'){
+//             user.balance =user.balance-expense.amount; // Update balance
+//            }
+//            if(expense.type=='expense'){
+//                user.balance =user.balance+ expense.amount; // Update balance
+//               }
+//         var updatedUser= this.updateUser(user);
+//         return updatedUser;    }
+// }
+export function deleteExpense(username, expense) {
+    var expenseId=expense.id;
     const user = this.getUser(username);
     if (user) {
-        user.expenses = user.expenses.filter(expense => expense.id !== expenseId);
-        var updatedUser= this.updateUser(user);
-        return updatedUser;    }
+        const index = user.expenses.findIndex(expense => expense.id === expenseId);
+        if (index !== -1) {
+            const deletedExpense = user.expenses.splice(index, 1)[0]; // Remove the expense from the array
+            if (deletedExpense.type === 'income') {
+                user.balance -= deletedExpense.amount; // Update balance for income
+            } else if (deletedExpense.type === 'expense') {
+                user.balance += deletedExpense.amount; // Update balance for expense
+            }
+            this.updateUser(user); // Update the user in the database
+            return user; // Return the updated user object
+        } else {
+            throw new Error('Expense not found');
+        }
+    } else {
+        throw new Error('User not found');
+    }
 }
+
+
 
 // Function to get expenses by username
 export function getExpenses(username) {

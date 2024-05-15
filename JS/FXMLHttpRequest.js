@@ -68,13 +68,14 @@ export class FXMLHttpRequest {
                 break;
              case 'DELETE':
                 if(data){
+                    var pasredData=JSON.parse(data);
                     this.readyState = 3;
                     if(this.url=="deleteUser"){
-                        console.log("data: ",data)
-                        this.responseText=Server.deleteUser(data)
+                        console.log("data: ",pasredData)
+                        this.responseText=Server.deleteUser(pasredData)
                     }
                     if(this.url=="deleteExpense"){
-                        this.responseText=Server.deleteExpense(data.username, data.expense)
+                        this.responseText=Server.deleteExpense(pasredData.username, pasredData.expense)
                     }
                     this.status =200;
                     this.onload();
