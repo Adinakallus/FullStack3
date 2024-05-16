@@ -82,15 +82,21 @@ export class FXMLHttpRequest {
                 }
                 else{
                     handleError(400, "Bad Request: No data provided")
-                }
+                }ד
                 break;
             case 'PUT':
                 if(data){
-                   console.log("data: ", data);
-                   this.responseText=Server.updateUser(data)                
-                   this.readyState = 3;
-                   this.status =200;
-                   this.onload();
+                    var pasredData=JSON.parse(data);
+                    this.readyState = 3;
+                    if(this.url=="updateUser"){
+                        console.log("data: ",pasredData)
+                        this.responseText=Server.updateUser(pasredData)
+                    }
+                    if(this.url=="updateExpense"){
+                        this.responseText=Server.updateExpense(pasredData.username, pasredData.expense)
+                    }
+                    this.status =200;
+                    this.onload();
                 }
                 else{
                     this.status =400;
