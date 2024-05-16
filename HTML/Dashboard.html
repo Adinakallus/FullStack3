@@ -56,7 +56,20 @@
             </ul>
             <!-- <button class="addExpenseBtn">Add Expense</button> -->
         </div>
+
+        <!-- Add the updateExpenseForm here -->
+        <div id="updateExpenseForm" style="display: none;">
+            <form>
+                <input type="number" id="expenseAmount" placeholder="Amount" required>
+                <input type="text" id="expenseTitle" placeholder="Title" required>
+                <input type="date" id="expenseDate" required>
+                <select id="expenseType">
+                    <option value="expense">Expense</option>
+                    <option value="income">Income</option>
+                </select>
+                <button type="submit">Update</button>
+            </form>
+        </div>
     </div>
     <script type="module" src="../JS/Dashboard.js"></script>
-
 </body>
