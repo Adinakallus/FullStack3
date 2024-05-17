@@ -82,7 +82,7 @@ export class FXMLHttpRequest {
                 }
                 else{
                     handleError(400, "Bad Request: No data provided")
-                }ד
+                }
                 break;
             case 'PUT':
                 if(data){

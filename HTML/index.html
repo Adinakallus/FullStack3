@@ -109,8 +109,8 @@
             </div>
             
             <!-- Add this inside the dashboardSection -->
-            <div id="updateExpenseForm" style="display: none;">
-                <form>
+            <div id="updateExpenseDiv" style="display: none;">
+                <form  id="updateExpenseForm" class="updateExpenseForm">
                     <input type="number" id="expenseAmount" placeholder="Amount" required>
                     <input type="text" id="expenseTitle" placeholder="Title" required>
                     <input type="date" id="expenseDate" required>
@@ -121,7 +121,9 @@
                     <button type="submit">Update</button>
                 </form>
             </div>
-
+            <footer>
+                <button id="logout-btn">Logout</button>
+            </footer>
         </section>
     </body>
 </html>

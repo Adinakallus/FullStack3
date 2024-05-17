@@ -38,7 +38,7 @@ export function addExpense(username, expense) {
         console.log("Expense type:", expense.type);
         console.log("Expense amount:", expense.amount);
         // user.expenses=[],
-        // user.balance=0;
+        //user.balance=0;
         user.expenses.push(expense);
         console.log(expense.amount)
         if(expense.type=='income'){
@@ -89,10 +89,17 @@ export function deleteExpense(username, expense) {
 // Function to update an expense
 export function updateExpense(username, updatedExpense) {
     const user = getUser(username);
+
     if (user) {
         const index = user.expenses.findIndex(expense => expense.id === updatedExpense.id);
         if (index !== -1) {
             // Update the expense in the array
+            const oldExpense=user.expenses[index];
+            if (updatedExpense.type === 'income') {
+                user.balance -= updatedExpense.amount; // Update balance for income
+            } else if (updatedExpense.type === 'expense') {
+                user.balance += updatedExpense.amount; // Update balance for expense
+            }
             user.expenses[index] = updatedExpense;
             updateUser(user); // Update the user in the database
             return user; // Return the updated user object

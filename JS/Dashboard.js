@@ -200,83 +200,84 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
            // Function to replace expense details with input fields
-function replaceWithInputFields(expense, listItem) {
-    // Check if the fields are already input fields
-    if (listItem.classList.contains('updating')) {
-        // Revert to original expense details
-        restoreOriginalDetails(expense, listItem);
-        // Call function to update the server
-        updateServerFunction();
-        return; // Exit function
-    }
+            function replaceWithInputFields(expense, listItem) {
+                var currentUser =JSON.parse( sessionStorage.getItem('currentUser'));
+                // Check if the fields are already input fields
+                if (listItem.classList.contains('updating')) {
+                    // Revert to original expense details
+                    updateExpense(currentUser, expense);
+                    // Call function to update the server
+                
+                    return; // Exit function
+                }
 
-    // Add 'updating' class to indicate that the item is being updated
-    listItem.classList.add('updating');
+                // Add 'updating' class to indicate that the item is being updated
+                listItem.classList.add('updating');
 
-    // Create input fields for each expense detail
-    var amountInput = document.createElement('input');
-    amountInput.type = 'number';
-    amountInput.value = expense.amount;
+                // Create input fields for each expense detail
+                var amountInput = document.createElement('input');
+                amountInput.type = 'number';
+                amountInput.value = expense.amount;
 
-    var titleInput = document.createElement('input');
-    titleInput.type = 'text';
-    titleInput.value = expense.title;
+                var titleInput = document.createElement('input');
+                titleInput.type = 'text';
+                titleInput.value = expense.title;
 
-    var dateInput = document.createElement('input');
-    dateInput.type = 'date';
-    dateInput.value = expense.date;
+                var dateInput = document.createElement('input');
+                dateInput.type = 'date';
+                dateInput.value = expense.date;
 
-    var typeInput = document.createElement('select');
-    var expenseOption = document.createElement('option');
-    expenseOption.value = 'expense';
-    expenseOption.text = 'Expense';
-    var incomeOption = document.createElement('option');
-    incomeOption.value = 'income';
-    incomeOption.text = 'Income';
-    typeInput.appendChild(expenseOption);
-    typeInput.appendChild(incomeOption);
-    typeInput.value = expense.type;
+                var typeInput = document.createElement('select');
+                var expenseOption = document.createElement('option');
+                expenseOption.value = 'expense';
+                expenseOption.text = 'Expense';
+                var incomeOption = document.createElement('option');
+                incomeOption.value = 'income';
+                incomeOption.text = 'Income';
+                typeInput.appendChild(expenseOption);
+                typeInput.appendChild(incomeOption);
+                typeInput.value = expense.type;
 
-    // Replace the expense details with input fields in the transactionItem
-    var transactionItem = listItem.querySelector('.transactionItem');
-    var transactionInfo = transactionItem.querySelector('.transactionInfo');
-    transactionInfo.innerHTML = ''; // Clear existing content
-    transactionInfo.appendChild(amountInput);
-    transactionInfo.appendChild(titleInput);
-    transactionInfo.appendChild(dateInput);
-    transactionInfo.appendChild(typeInput);
+                // Replace the expense details with input fields in the transactionItem
+                var transactionItem = listItem.querySelector('.transactionItem');
+                var transactionInfo = transactionItem.querySelector('.transactionInfo');
+                transactionInfo.innerHTML = ''; // Clear existing content
+                transactionInfo.appendChild(amountInput);
+                transactionInfo.appendChild(titleInput);
+                transactionInfo.appendChild(dateInput);
+                transactionInfo.appendChild(typeInput);
 
-    // Add event listener for form submission
-    listItem.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();
+                // Add event listener for form submission
+                listItem.querySelector('.updateExpenseForm').addEventListener('submit', function(event) {
+                    event.preventDefault();
 
-        // Get the updated expense details from the input fields
-        var updatedAmount = parseFloat(amountInput.value);
-        var updatedTitle = titleInput.value;
-        var updatedDate = dateInput.value;
-        var updatedType = typeInput.value;
+                    // Get the updated expense details from the input fields
+                    var updatedAmount = parseFloat(amountInput.value);
+                    var updatedTitle = titleInput.value;
+                    var updatedDate = dateInput.value;
+                    var updatedType = typeInput.value;
 
-        // Construct the updated expense object
-        var updatedExpense = {
-            id: expense.id,
-            amount: updatedAmount,
-            title: updatedTitle,
-            date: updatedDate,
-            type: updatedType
-        };
+                    // Construct the updated expense object
+                    var updatedExpense = {
+                        id: expense.id,
+                        amount: updatedAmount,
+                        title: updatedTitle,
+                        date: updatedDate,
+                        type: updatedType
+                    };
 
-        // Send a request to update the expense on the server
-        updateExpense(currentUser.username, updatedExpense);
+                    // Send a request to update the expense on the server
+                    updateExpense(currentUser.username, updatedExpense);
 
-        // Restore the original expense details after submission
-        restoreOriginalDetails(expense, listItem);
-    });
-}
-        // Empty function to update the server
-function emptyUpdateServerFunction() {
-    // This function does nothing
-    return;
-}   
+                    // Restore the original expense details after submission
+                    restoreOriginalDetails(expense, listItem);
+                });
+            }
+            // Empty function to update the server
+            function updateServerFunction() {
+                console.log("called updateServerFunction")
+            // return;
+            }   
 
             function deleteExpense(username, expense) {
                 var xhr = new FXMLHttpRequest();
@@ -298,6 +299,33 @@ function emptyUpdateServerFunction() {
                     console.error('Request failed:', xhr.status, xhr.statusText);
                 };
                 xhr.send(JSON.stringify({ username: username, expense: expense }));
+            }
+
+            function updateExpense(username, updatedExpense) {
+                const data={
+                    username:username,
+                    updatedExpense:updateExpense
+                }
+                const jsonData=JSON.stringify(data)
+                var xhr = new FXMLHttpRequest();
+                xhr.open('PUT', 'updateExpense', true);
+                xhr.onload = function() {
+                    if (xhr.status == 200) {
+                        // Upon successful deletion, fetch and display expenses again
+                        var user = xhr.responseText;
+                        sessionStorage.setItem('currentUser', JSON.stringify(user));
+                        displayWelcome();
+                        fetchAndDisplayExpenses();
+                        console.log("responseText: ",xhr.responseText);
+                        console.log("user: ", user)                        
+                    } else {
+                        console.error('Failed to delete expense:', xhr.status, xhr.statusText);
+                    }
+                };
+                xhr.onerror = function() {
+                    console.error('Request failed:', xhr.status, xhr.statusText);
+                };
+                xhr.send(jsonData);
             }
 
 });
