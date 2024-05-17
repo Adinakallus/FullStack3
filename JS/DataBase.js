@@ -95,10 +95,17 @@ export function updateExpense(username, updatedExpense) {
         if (index !== -1) {
             // Update the expense in the array
             const oldExpense=user.expenses[index];
-            if (updatedExpense.type === 'income') {
+            if (oldExpense.type === 'income') {
+                user.balance -= oldExpense.amount; // Update balance for income
+               
+            } else if (oldExpense.type === 'expense') {
+                user.balance += oldExpense.amount; // Update balance for expense
+            }
+            if(updateExpense.type==='income'){
+                user.balance += updatedExpense.amount; // Update balance for income
+            }
+            if(updateExpense.type==='expense'){
                 user.balance -= updatedExpense.amount; // Update balance for income
-            } else if (updatedExpense.type === 'expense') {
-                user.balance += updatedExpense.amount; // Update balance for expense
             }
             user.expenses[index] = updatedExpense;
             updateUser(user); // Update the user in the database
