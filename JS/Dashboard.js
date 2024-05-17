@@ -199,17 +199,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }
 
-           // Function to replace expense details with input fields
+          // Function to replace expense details with input fields
             function replaceWithInputFields(expense, listItem) {
-                var currentUser =JSON.parse( sessionStorage.getItem('currentUser'));
-                // Check if the fields are already input fields
-                if (listItem.classList.contains('updating')) {
-                    // Revert to original expense details
-                    updateExpense(currentUser, expense);
-                    // Call function to update the server
-                
-                    return; // Exit function
-                }
+                var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
                 // Add 'updating' class to indicate that the item is being updated
                 listItem.classList.add('updating');
@@ -237,6 +229,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 typeInput.appendChild(expenseOption);
                 typeInput.appendChild(incomeOption);
                 typeInput.value = expense.type;
+                    
 
                 // Replace the expense details with input fields in the transactionItem
                 var transactionItem = listItem.querySelector('.transactionItem');
@@ -246,9 +239,47 @@ document.addEventListener("DOMContentLoaded", function() {
                 transactionInfo.appendChild(titleInput);
                 transactionInfo.appendChild(dateInput);
                 transactionInfo.appendChild(typeInput);
+                
+                // Create a form element for updating the expense
+                var updateForm = document.createElement('form');
+                updateForm.classList.add('updateExpenseForm');
 
-                // Add event listener for form submission
-                listItem.querySelector('.updateExpenseForm').addEventListener('submit', function(event) {
+                // Hide the old update button
+                var oldUpdateButton = transactionItem.querySelector('button');
+                oldUpdateButton.style.display = 'none';
+
+                 // Create the update and cancel buttons
+                var updateButton = document.createElement('button');
+                updateButton.textContent = 'Update';
+
+                var cancelButton = document.createElement('button');
+                cancelButton.textContent = 'Cancel'; // New button
+
+                // Append the buttons to the form
+                updateForm.appendChild(updateButton);
+                updateForm.appendChild(cancelButton); // Append the new button
+
+                updateButton.addEventListener('click', function () {
+                    updateForm.dispatchEvent(new Event('submit'));
+                });
+
+                // Event listener for cancelButton
+                cancelButton.addEventListener('click', function () {
+                    // Show the old update button
+                    oldUpdateButton.style.display = 'block';
+                
+                    // Hide the form with buttons
+                    updateForm.style.display = 'none';
+
+                    // Hide the form with buttons
+                    cancelButton.style.display = 'none';
+                
+                    // Remove 'updating' class from the list item to indicate that it's no longer being updated
+                    listItem.classList.remove('updating');
+                });
+
+                            // Event listener for form submission
+                updateForm.addEventListener('submit', function (event) {
                     event.preventDefault();
 
                     // Get the updated expense details from the input fields
@@ -271,13 +302,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     // Restore the original expense details after submission
                     restoreOriginalDetails(expense, listItem);
+                    // Show the old update button
+                    oldUpdateButton.style.display = 'block';
+                    // Hide the form with buttons
+                    updateForm.style.display = 'none';
+                    // Remove 'updating' class from the list item to indicate that it's no longer being updated
+                    listItem.classList.remove('updating');
                 });
+
+                // Append the form with buttons to the transaction item
+                transactionItem.appendChild(updateForm);
             }
-            // Empty function to update the server
-            function updateServerFunction() {
-                console.log("called updateServerFunction")
-            // return;
-            }   
 
             function deleteExpense(username, expense) {
                 var xhr = new FXMLHttpRequest();
@@ -304,7 +339,7 @@ document.addEventListener("DOMContentLoaded", function() {
             function updateExpense(username, updatedExpense) {
                 const data={
                     username:username,
-                    updatedExpense:updateExpense
+                    updatedExpense:updatedExpense
                 }
                 const jsonData=JSON.stringify(data)
                 var xhr = new FXMLHttpRequest();

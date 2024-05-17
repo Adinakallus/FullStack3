@@ -93,7 +93,7 @@ export class FXMLHttpRequest {
                         this.responseText=Server.updateUser(pasredData)
                     }
                     if(this.url=="updateExpense"){
-                        this.responseText=Server.updateExpense(pasredData.username, pasredData.expense)
+                        this.responseText=Server.updateExpense(pasredData.username, pasredData.updatedExpense)
                     }
                     this.status =200;
                     this.onload();

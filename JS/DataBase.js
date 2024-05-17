@@ -17,7 +17,7 @@ export function getUser(username) {
 }
 
 export function updateUser(updatedUser) {
-    const allUsers = this.getAllUsers();
+    const allUsers = getAllUsers();
     const index = allUsers.findIndex(user => user.username === updatedUser.username);
     if (index !== -1) {
         allUsers[index] = updatedUser;
