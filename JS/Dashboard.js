@@ -23,8 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Handle the case when user information is not available
                 console.log('User information not found.');
             }
-            }
-
+        }
 
             //Add Expense
             // Add expense form submission handler
@@ -176,9 +175,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     var updateButton = document.createElement('button');
                     updateButton.textContent = 'Update';
                     updateButton.addEventListener('click', function() {
-                        // Handle update expense functionality here
-                        // You can show a form/modal to update the expense details
-                        // Replace the expense details with input fields for updating
                         replaceWithInputFields(expense, listItem);
                     });
                         
@@ -362,6 +358,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 };
                 xhr.send(jsonData);
             }
+            // Logout button functionality
+    var logoutButton = document.getElementById('logoutButton');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function() {
+            sessionStorage.removeItem('currentUser');
+            document.getElementById('dashboardSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+        });
+    }
 
 });
 

@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", function() {
         event.preventDefault();
 
         // Retrieve the values entered by the user in the form fields
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
+        var username = document.getElementById("RegisterUsername").value;
+        var password = document.getElementById("RegisterPassword").value;
         var confirmPassword = document.getElementById("confirmPassword").value;
         var email = document.getElementById("email").value;
         var balanceString = document.getElementById("balance").value;
