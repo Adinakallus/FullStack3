@@ -48,7 +48,9 @@ document.addEventListener("DOMContentLoaded", function() {
                      // Store user information in sessionStorage
                      sessionStorage.setItem('currentUser', JSON.stringify(user));
                      // Redirect to the Dashboard page
-                    window.location.href = "../HTML/Dashboard.html";
+                   // Hide the login section and display the dashboard section
+                   document.getElementById('loginSection').style.display = 'none';
+                   document.getElementById('dashboardSection').style.display = 'block';
                 } else {
                     // If password is incorrect, display error message
                     document.getElementById("loginMessage").innerHTML ="Incorrect password.";

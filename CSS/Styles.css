@@ -116,3 +116,196 @@ button:hover {
 #addExpenseBtn {
     /* Optional: Adjust button styles */
 }
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #EDF2F4;
+}
+
+.dashboard-Container {
+    padding: 20px;
+}
+
+.top {
+    background-color: #EDF2F4;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left, .right {
+    flex: 1;
+    padding: 20px;
+}
+
+.grad {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    color: #EDF2F4;
+    background: linear-gradient(90deg, #40c9ff 0%, #e81cff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.balanceBox {
+    text-align: center;
+}
+
+.balanceBox h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.balanceAmount {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.addExpenseForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.addExpenseForm input, .addExpenseForm select, .addExpenseForm button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.addExpenseForm button {
+    background-color: #40c9ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.addExpenseForm button:hover {
+    background-color: #1ea8e3;
+}
+
+.transactions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transactionItem {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.transactionInfo {
+    flex: 1;
+    display: flex;
+}
+
+.amount, .title, .date {
+    margin-right: 10px;
+}
+
+.arrow {
+    width: 20px;
+    height: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logout-btn {
+    background-color: #e81cff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c715ff;
+}
+
+#updateExpenseDiv {
+    display: none;
+}
+
+.updateExpenseForm input, .updateExpenseForm select, .updateExpenseForm button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+#updateExpenseDiv {
+    display: none;
+    padding: 20px;
+}
+
+.updateExpenseForm {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="date"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn {
+    cursor: pointer;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #40c9ff;
+    color: #fff;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: auto; /* Adjusted width */
+    display: inline-block; /* Ensures the button only takes the necessary width */
+    margin-right: 10px; /* Add some space between the button and other form elements */
+}
+
+
+.btn-primary {
+    background-color: #e81cff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #c715ff;
+}
