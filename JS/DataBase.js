@@ -101,10 +101,10 @@ export function updateExpense(username, updatedExpense) {
             } else if (oldExpense.type === 'expense') {
                 user.balance += oldExpense.amount; // Update balance for expense
             }
-            if(updateExpense.type==='income'){
+            if(updatedExpense.type==='income'){
                 user.balance += updatedExpense.amount; // Update balance for income
             }
-            if(updateExpense.type==='expense'){
+            if(updatedExpense.type==='expense'){
                 user.balance -= updatedExpense.amount; // Update balance for income
             }
             user.expenses[index] = updatedExpense;

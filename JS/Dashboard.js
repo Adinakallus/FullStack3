@@ -1,29 +1,29 @@
 import { FXMLHttpRequest } from './FXMLHttpRequest.js';
 
 
-document.addEventListener("DOMContentLoaded", function() {
-        displayWelcome();
-        fetchAndDisplayExpenses();
-            function displayWelcome(){
-                // Retrieve user information from sessionStorage
-            var currentUser = sessionStorage.getItem('currentUser');
-            if (currentUser) {
-                currentUser = JSON.parse(currentUser);
-                // Display username
-                var userNameElement = document.getElementById('userName');
-                if (userNameElement) {
-                    userNameElement.textContent = currentUser.username;
-                }
-                // Display balance
-                var balanceAmountElement = document.querySelector('.balanceAmount');
-                if (balanceAmountElement) {
-                    balanceAmountElement.textContent = '$' + currentUser.balance;
-                }
-            } else {
-                // Handle the case when user information is not available
-                console.log('User information not found.');
-            }
+export function initializeDashboard() {
+    displayWelcome();
+    fetchAndDisplayExpenses();
+    function displayWelcome(){
+        // Retrieve user information from sessionStorage
+    var currentUser = sessionStorage.getItem('currentUser');
+    if (currentUser) {
+        currentUser = JSON.parse(currentUser);
+        // Display username
+        var userNameElement = document.getElementById('userName');
+        if (userNameElement) {
+            userNameElement.textContent = currentUser.username;
         }
+        // Display balance
+        var balanceAmountElement = document.querySelector('.balanceAmount');
+        if (balanceAmountElement) {
+            balanceAmountElement.textContent = '$' + currentUser.balance;
+        }
+    } else {
+        // Handle the case when user information is not available
+        console.log('User information not found.');
+    }
+}
 
             //Add Expense
             // Add expense form submission handler
@@ -36,10 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     var title = document.getElementById('expenseTitle').value;
                     var date = document.getElementById('expenseDate').value;
                     var type = document.getElementById('expenseType').value;
-                    if(!title){
-                        document.getElementById("addExpenseMessage").innerHTML = "Please add title";
-
-                    }else{
+                
                     // Construct the expense object
                     var currentUser =JSON.parse( sessionStorage.getItem('currentUser'));
                     var amount = parseInt(amountString, 10)
@@ -87,15 +84,16 @@ document.addEventListener("DOMContentLoaded", function() {
             
                     try{
                     // Send the request to the server to authenticate the user
-                    xhr.send(data);
+                    xhr.send(jsonData);
+                   // addExpenseForm.reset();
+
                 //  window.location.href = "../HTML/Dashboard.html";
             
                     }catch(error){
                         //document.getElementById("addExpenseMessage").innerHTML = error;
 
                     }
-                }
-                addExpenseForm.reset();
+                
                 });
             };
 
@@ -297,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     updateExpense(currentUser.username, updatedExpense);
 
                     // Restore the original expense details after submission
-                    restoreOriginalDetails(expense, listItem);
+                    //restoreOriginalDetails(expense, listItem);
                     // Show the old update button
                     oldUpdateButton.style.display = 'block';
                     // Hide the form with buttons
@@ -368,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-});
+}
 
 
 

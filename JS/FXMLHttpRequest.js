@@ -51,13 +51,14 @@ export class FXMLHttpRequest {
           
             case 'POST':
                if(data){
+                var pasredData=JSON.parse(data);
                     this.readyState = 3;
                     if(this.url=="addUser"){
                         console.log("data: ",data)
                         this.responseText=Server.addUser(data)
                     }
                     if(this.url=="addExpense"){
-                        this.responseText=Server.addExpense(data.username, data.expense)
+                        this.responseText=Server.addExpense(pasredData.username, pasredData.expense)
                     }
                     this.status =200;
                     this.onload();
